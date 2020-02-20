@@ -57,7 +57,7 @@ class Point {
 const HEX_SIZE = 50;
 const HEX_RADIUS = 5;
 const ARRAY_SIZE = HEX_RADIUS * 2 + 1;
-const STEP_SIZE = 0.01;
+const STEP_SIZE = 0.005;
 const MAX_DEPTH = 10;
 const numberFormat = Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
@@ -90,21 +90,12 @@ function setup() {
     canvasHeight = windowHeight;
     createCanvas(canvasWidth, canvasHeight);
     background(240);
-    noLoop();
     biases = Array.from(Array(ARRAY_SIZE),
         () => Array.from(Array(ARRAY_SIZE),
             () => randomGaussian()));
     depths = Array.from(Array(ARRAY_SIZE),
         () => Array.from(Array(ARRAY_SIZE),
             () => randomGaussian()));
-}
-
-function mousePressed() {
-    loop();
-}
-
-function mouseReleased() {
-    noLoop();
 }
 
 function drawHexagon(x, y, depth, bias) {
@@ -133,6 +124,7 @@ function updateDepth(point) {
     const neighbors = point.getNeighbors();
     const sumDepths = neighbors.map(p => p.getDepth())
         .reduce((acc, depth) => acc + depth);
-    const target = sumDepths + point.getBias() / neighbors.length + 1;
-    point.setDepth(point.getDepth() + (STEP_SIZE * (target - 7 * point.getDepth())));
+    const target = sumDepths / neighbors.length;
+    const drift = point.getDepth() - point.getBias();
+    point.setDepth(point.getDepth() + (STEP_SIZE * (target - 2 * drift)));
 }
