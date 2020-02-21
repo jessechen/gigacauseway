@@ -58,7 +58,7 @@ const HEX_SIZE = 50;
 const HEX_RADIUS = 5;
 const ARRAY_SIZE = HEX_RADIUS * 2 + 1;
 const STEP_SIZE = 0.005;
-const MAX_DEPTH = 10;
+const MAX_DEPTH = 5;
 const numberFormat = Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
 });
@@ -78,8 +78,7 @@ function draw() {
                 drawHexagon(
                     centerWidth + (3 / 2 * HEX_SIZE * q),
                     centerHeight + (HEX_SIZE * sqrt(3) / 2 * (2 * r + q)),
-                    point.getDepth(),
-                    point.getBias());
+                    point);
             }
         }
     }
@@ -98,10 +97,14 @@ function setup() {
             () => randomGaussian()));
 }
 
-function drawHexagon(x, y, depth, bias) {
+function drawHexagon(x, y, point) {
     const height = Math.sqrt(3) * HEX_SIZE;
     const width = 2 * HEX_SIZE;
     stroke(0, 15, 85);
+    if (Math.abs(mouseX - x) < width / 2 &&
+        Math.abs(mouseY - y) < height / 2) {
+        point.setDepth(2.5);
+    }
     noFill();
     beginShape();
     vertex(x - 1/4 * width, y - height / 2);
@@ -114,10 +117,10 @@ function drawHexagon(x, y, depth, bias) {
     textAlign(CENTER, CENTER);
     textSize(24);
     fill(80, 0, 80);
-    text(numberFormat.format(depth), x, y - 15);
+    text(numberFormat.format(point.getDepth()), x, y - 15);
     textSize(16);
     fill(0, 15, 85);
-    text(numberFormat.format(bias), x, y + 20);
+    text(numberFormat.format(point.getBias()), x, y + 20);
 }
 
 function updateDepth(point) {
