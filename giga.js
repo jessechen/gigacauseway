@@ -83,39 +83,33 @@ function draw() {
     }
 }
 
-function mousePressed() {
-    loop();
-}
-
-function mouseReleased() {
-    noLoop();
-}
-
 function setup() {
     canvasWidth = windowWidth;
     canvasHeight = windowHeight;
     createCanvas(canvasWidth, canvasHeight, WEBGL);
     background(240);
     const bounds = HEX_SIZE * 2 * HEX_RADIUS;
-    ortho(-bounds, bounds, -bounds + HEX_HEIGHT_MULTIPLIER, bounds, + HEX_HEIGHT_MULTIPLIER);
+    ortho(-bounds, bounds, -bounds + HEX_HEIGHT_MULTIPLIER, bounds + HEX_HEIGHT_MULTIPLIER);
     biases = Array.from(Array(ARRAY_SIZE),
         () => Array.from(Array(ARRAY_SIZE),
             () => randomGaussian()));
     depths = Array.from(Array(ARRAY_SIZE),
         () => Array.from(Array(ARRAY_SIZE),
             () => randomGaussian()));
-    noLoop();
 }
 
-function drawPrism(x, y, point) {
+function drawPrism(z, x, point) {
     const depth = (point.getDepth() + MAX_DEPTH / 2) * HEX_HEIGHT_MULTIPLIER;
     if (depth > 0) {
         push();
-        rotateX(TAU / 4);
-        rotateX(TAU / 12);
-        rotateY(-TAU / 12);
-        translate(y, depth / 2, x);
-        fill(150);
+        fill(192);
+        if (Math.abs(z - (-mouseY + canvasHeight / 2) + depth / 2) < HEX_SIZE) {
+            if (Math.abs(x - (mouseX - canvasWidth / 2)) < HEX_SIZE) {
+                point.setDepth(MAX_DEPTH / 2);
+            }
+        }
+        rotateX(3 * TAU / 8);
+        translate(x, depth / 2, z);
         cylinder(HEX_SIZE, depth, 6);
         pop();
     }
