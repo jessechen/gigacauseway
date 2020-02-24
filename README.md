@@ -11,6 +11,7 @@ Inspiration
 -----------
 
 [Giant's Causeway](https://www.gettyimages.com/photos/giants-causeway?sort=mostpopular&mediatype=photography&phrase=giants%20causeway)
+[Hexagonal Grids](https://www.redblobgames.com/grids/hexagons/)
 
 Setup
 -----
