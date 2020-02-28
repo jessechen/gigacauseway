@@ -56,7 +56,7 @@ class Point {
 
 const HEX_SIZE = 50;
 const HEX_HEIGHT_MULTIPLIER = 100;
-const HEX_RADIUS = 6;
+const HEX_RADIUS = 5;
 const ARRAY_SIZE = HEX_RADIUS * 2 + 1;
 const STEP_SIZE = 0.005;
 const MAX_DEPTH = 5;
