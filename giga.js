@@ -56,7 +56,7 @@ class Point {
 
 const HEX_SIZE = 50;
 const HEX_HEIGHT_MULTIPLIER = 100;
-const HEX_RADIUS = 5;
+const HEX_RADIUS = 6;
 const ARRAY_SIZE = HEX_RADIUS * 2 + 1;
 const STEP_SIZE = 0.005;
 const MAX_DEPTH = 5;
@@ -89,7 +89,7 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight, WEBGL);
     background(240);
     const bounds = HEX_SIZE * 2 * HEX_RADIUS;
-    ortho(-bounds, bounds, -bounds + HEX_HEIGHT_MULTIPLIER, bounds + HEX_HEIGHT_MULTIPLIER);
+    ortho(-bounds, bounds, -bounds + HEX_HEIGHT_MULTIPLIER, bounds + HEX_HEIGHT_MULTIPLIER, -500, 1000);
     biases = Array.from(Array(ARRAY_SIZE),
         () => Array.from(Array(ARRAY_SIZE),
             () => randomGaussian()));
